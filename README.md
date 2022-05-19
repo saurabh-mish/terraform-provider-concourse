@@ -132,3 +132,9 @@ Since HashiCups is a third-party provider, the `hostname` and `namespace` values
 + Read API resources using Terraform
 
   `terraform apply -target=data.hashicups_ingredients.first_coffee -var-file=credentials.tfvars -auto-approve`
+
+## Delete
+
++ Destroy resources
+
+  `terraform destroy -target=hashicups_order.edu -var-file=credentials.tfvars -auto-approve`
