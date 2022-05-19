@@ -85,7 +85,7 @@ Since HashiCups is a third-party provider, the `hostname` and `namespace` values
 
 + Output contents of plan file to JSON
 
- `terraform show -json create.tfplan > sink/create_plan.json`
+  `terraform show -json create.tfplan > sink/create_plan.json`
 
 + View plean file
 
