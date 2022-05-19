@@ -15,6 +15,7 @@ variable "password" {
   sensitive   = true
 }
 
+
 resource "hashicups_order" "edu" {
   items {
     coffee {
