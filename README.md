@@ -98,3 +98,37 @@ Since HashiCups is a third-party provider, the `hostname` and `namespace` values
 + Show current state (reads the `terraform.tfstate`)
 
   `terraform state show hashicups_order.edu`
+
++ Verify order creation (use `order_ID` from the above)
+
+  `curl -X GET  -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<order_ID>`
+
+### Update
+
++ Make changes to the "quantity" files and apply Terraform
+
++ Show current state (reads the `terraform.tfstate`)
+
+  `terraform state show hashicups_order.edu`
+
++ Verify order creation (use `order_ID` from the above)
+
+  `curl -X GET  -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<order_ID>`
+
+### Read
+
++ Create a plan targeting the read resource only
+
+  `terraform plan -target=data.hashicups_ingredients.first_coffee -var-file=credentials.tfvars -out read.tfplan`
+
++ Output contents of plan file to JSON
+
+  `terraform show -json read.tfplan > sink/read_plan.json`
+
++ View plean file
+
+  `cat sink/read_plan.json | jq`
+
++ Read API resources using Terraform
+
+  `terraform apply -target=data.hashicups_ingredients.first_coffee -var-file=credentials.tfvars -auto-approve`
