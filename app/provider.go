@@ -16,7 +16,10 @@ func Provider() terraform.ResourceProvider {
 				DefaultFunc: schema.EnvDefaultFunc("CONCOURSE_TOKEN", "")
 			},
 		},
-		configureFunc: configureProvider,
+		ResourcesMap: map[string]*schema.Resource{
+			"app_item": resourceItem(),
+		},
+		ConfigureFunc: configureProvider,
 	}
 }
 

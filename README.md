@@ -15,3 +15,4 @@ Terraform provider for Concourse Labs
 [3]: https://www.youtube.com/watch?v=OoSAepwT0l4
 [4]: https://www.youtube.com/watch?v=gNFBWmKNlxA
 [5]: https://www.youtube.com/watch?v=3XayxW5B-ig&t=449s
+[6]: https://learn.hashicorp.com/collections/terraform/providers
