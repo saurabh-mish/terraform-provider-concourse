@@ -1,3 +1,20 @@
+provider "hashicups" {
+  username = var.username
+  password = var.password
+}
+
+variable "username" {
+  type        = string
+  description = "HashiCups login username"
+  sensitive   = false
+}
+
+variable "password" {
+  type        = string
+  description = "HashiCups login password"
+  sensitive   = true
+}
+
 resource "hashicups_order" "edu" {
   items {
     coffee {
