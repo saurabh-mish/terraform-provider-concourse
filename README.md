@@ -54,7 +54,7 @@ In this case, the path will translate to:<br>
 
 + Set environment variable `HASHICUPS_TOKEN` to the token value received as response
 
-  `export HASHICUPS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTMwNzAzNDksInVzZXJfaWQiOjEsInVzZXJuYW1lIjoiZWR1Y2F0aW9uIn0.EIDanBdUg_nkSybM3tO4Z9jkedRCpWu76ZqPrRNN7t0`
+  `export HASHICUPS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTMwNzM1MTEsInVzZXJfaWQiOjQsInVzZXJuYW1lIjoiZWR1Y2F0aW9uMSJ9.xrdYqt9SbUiZjwflZCfmip1eaKNX-DQcqZj1UHTPwX0`
 
   **NOTE**: The below message will be logged in the initial terminal:
 
@@ -67,3 +67,34 @@ Initialize Terraform:<br>
 `terraform init`
 
 Since HashiCups is a third-party provider, the `hostname` and `namespace` values in the source string are arbitrary.
+
+
+## CRUD Operations
+
+*Messages will be logged in the initial terminal*
+
+### Create
+
++ Initialize
+
+  `terraform init`
+
++ Create a plan targeting the create resource only (and store output - this is a terraform binary):
+
+  `terraform plan -target=hashicups_order.edu -var-file=credentials.tfvars -out create.tfplan`
+
++ Output contents of plan file to JSON
+
+ `terraform show -json create.tfplan > sink/create_plan.json`
+
++ View plean file
+
+  `cat sink/create_plan.json | jq`
+
++ Create API resources
+
+  `terraform apply -target=hashicups_order.edu -var-file=credentials.tfvars -auto-approve`
+
++ Show current state (reads the `terraform.tfstate`)
+
+  `terraform state show hashicups_order.edu`
