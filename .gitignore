@@ -8,6 +8,9 @@ bin
 *.tfstate
 *.tfstate.*
 
+# Lock files
+*.lock.hcl
+
 # Crash log files
 crash.log
 
