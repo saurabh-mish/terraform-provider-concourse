@@ -34,6 +34,10 @@ Performs read operation on a locally running API.
 
 ## Terraform
 
++ Change to `examples/` directory (from project root)
+
+  `cd examples/`
+
 + Initialize
 
   `terraform init`
