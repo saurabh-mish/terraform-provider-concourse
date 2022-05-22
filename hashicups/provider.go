@@ -23,7 +23,9 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("HASHICUPS_PASSWORD", nil),
 			},
 		},
-		ResourcesMap: map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{
+      "hashicups_order": resourceOrder(),
+    },
 		DataSourcesMap: map[string]*schema.Resource{
 			"hashicups_coffees": dataSourceCoffees(),
 			"hashicups_order":   dataSourceOrder(),
@@ -39,12 +41,12 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-  // warning message
-  //diags = append(diags, diag.Diagnostic{
-  //  Severity: diag.Warning,
-  //  Summary:  "Warning Message Summary",
-  //  Detail:   "This is the detailed warning message from providerConfigure",
-  //})
+	// warning message
+	//diags = append(diags, diag.Diagnostic{
+	//  Severity: diag.Warning,
+	//  Summary:  "Warning Message Summary",
+	//  Detail:   "This is the detailed warning message from providerConfigure",
+	//})
 
 	if (username != "") && (password != "") {
 		c, err := hashicups.NewClient(nil, &username, &password)
