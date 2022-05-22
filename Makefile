@@ -1,4 +1,3 @@
-TEST?=$$(go list ./... | grep -v 'vendor')
 HOSTNAME=hashicorp.com
 NAMESPACE=edu
 TYPE=provider
@@ -13,4 +12,4 @@ build:
 	go build -o ${BINARY}
 
 install:
-	mv ${BINARY} ~/.terraform.d/plugins/hashicorp.com/edu/hashicups/0.3.1/darwin_arm64
+	mv ${BINARY} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
