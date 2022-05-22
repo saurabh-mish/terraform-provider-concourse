@@ -14,12 +14,10 @@ provider "hashicups" {}
 //  password = "test123"
 //}
 
-module "psl" {
-  source = "./coffee"
-
-  coffee_name = "Packer Spiced Latte"
+data "hashicups_order" "order" {
+  id = 1
 }
 
-output "psl" {
-  value = module.psl.coffee
+output "order" {
+  value = data.hashicups_order.order
 }
