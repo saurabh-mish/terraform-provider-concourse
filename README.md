@@ -1,6 +1,6 @@
 # Hashicups Provider
 
-Terraform plugins follow naming convention of type `terraform-<TYPE>-<NAME>`
+Performs read operation on a locally running API.
 
 ## Run API locally
 
@@ -24,17 +24,13 @@ Terraform plugins follow naming convention of type `terraform-<TYPE>-<NAME>`
 
   `go mod tidy`
 
-+ Build provider using Makefile
++ Build provider and install locally using Makefile
 
   `make build`
 
 + Execute binary
 
   `./terraform-provider-hashicups`
-
-+ Move to local plugin directory
-
-  `mv terraform-provider-hashicups ~/.terraform.d/plugins/hashicorp.com/edu/hashicups/0.3.1/darwin_arm64`
 
 ## Terraform
 
