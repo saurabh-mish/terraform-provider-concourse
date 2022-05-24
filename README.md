@@ -14,23 +14,81 @@ Performs read operation on a locally running API.
 
   `curl localhost:19090/health`
 
-## Data
+## REST Endpoints
 
-+ Signin
++ User Auth
 
-  `curl -X POST localhost:19090/signin -d '{"username":"education", "password":"test123"}'`
+  + Sign-up
 
-+ Save token
+    `curl -X POST localhost:19090/signup -d '{"username":"education", "password":"test123"}'`
 
-  `export HASHICUPS_TOKEN=ey.....`
+  + Sign-in
 
-+ Add data
+    `curl -X POST localhost:19090/signin -d '{"username":"education", "password":"test123"}'`
 
-  `curl -X POST -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders -d '[{"coffee": { "id":1 }, "quantity":4}, {"coffee": { "id":3 }, "quantity":3}]'`
+  + Set token
 
-+ Verify data
+    `export HASHICUPS_TOKEN="ey ..."`
 
-  `curl -X GET -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/1`
++ Read
+
+  + All coffee
+
+    `curl localhost:19090/coffees`
+
+  + Order ID
+
+    `curl -X GET -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID>`
+
++ Create
+
+  `curl -X POST -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders -d '[{"coffee": { "id":1 }, "quantity":2}, {"coffee": { "id":3 }, "quantity":2}]'`
+
++ Update
+
+  `curl -X PUT -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID> -d  '[{"coffee": { "id":1 }, "quantity":1}, {"coffee": { "id":3 }, "quantity":3}]'`
+
++ Delete
+
+  `curl -X DELETE -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID>`
+
+## Data Structure
+
+The *order* service requires coffee ID and quantity.
+
+It has the following structure:
+
+```
+{
+  "id": 7,                                 --> order ID
+  "items": [
+    {
+      "coffee": {
+        "id": 1,                           --> coffee ID
+        "name": "Packer Spiced Latte",
+        "teaser": "Packed with goodness to spice up your images",
+        "description": "",
+        "price": 350,
+        "image": "/packer.png",
+        "ingredients": null
+      },
+      "quantity": 1
+    },
+    {
+      "coffee": {
+        "id": 3,
+        "name": "Nomadicano",
+        "teaser": "Drink one today and you will want to schedule another",
+        "description": "",
+        "price": 150,
+        "image": "/nomad.png",
+        "ingredients": null
+      },
+      "quantity": 3
+    }
+  ]
+}
+```
 
 ## Provider
 
