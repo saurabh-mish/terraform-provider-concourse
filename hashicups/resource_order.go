@@ -3,6 +3,7 @@ package hashicups
 import (
 	"context"
 	"strconv"
+  "time"
 
 	hc "github.com/hashicorp-demoapp/hashicups-client-go"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -17,6 +18,11 @@ func resourceOrder() *schema.Resource {
 		DeleteContext: resourceOrderDelete,
 
 		Schema: map[string]*schema.Schema{
+      "last_updated": &schema.Schema{
+        Type:     schema.TypeString,
+        Optional: true,
+        Computed: true,
+      },
 			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -127,15 +133,61 @@ func resourceOrderRead(ctx context.Context, d *schema.ResourceData, m interface{
 }
 
 func resourceOrderUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceOrderRead(ctx, d, m)
+  c := m.(*hc.Client)
+
+  orderID := d.Id()
+
+  if d.HasChange("items") {
+    items := d.Get("items").([]interface{})
+    ois := []hc.OrderItem{}
+
+    for _, item := range items {
+      i := item.(map[string]interface{})
+
+      co := i["coffee"].([]interface{})[0]
+      coffee := co.(map[string]interface{})
+
+      oi := hc.OrderItem{
+        Coffee: hc.Coffee{
+          ID: coffee["id"].(int),
+        },
+        Quantity: i["quantity"].(int),
+      }
+      ois = append(ois, oi)
+    }
+
+    _, err := c.UpdateOrder(orderID, ois)
+    if err != nil {
+      return diag.FromErr(err)
+    }
+
+    d.Set("last_updated", time.Now().Format(time.RFC850))
+  }
+
+  return resourceOrderRead(ctx, d, m)
 }
+
 
 func resourceOrderDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	// Warning or errors can be collected in a slice type
-	var diags diag.Diagnostics
+  c := m.(*hc.Client)
 
-	return diags
+  // Warning or errors can be collected in a slice type
+  var diags diag.Diagnostics
+
+  orderID := d.Id()
+
+  err := c.DeleteOrder(orderID)
+  if err != nil {
+    return diag.FromErr(err)
+  }
+
+  // d.SetId("") is automatically called assuming delete returns no errors, but
+  // it is added here for explicitness.
+  d.SetId("")
+
+  return diags
 }
+
 
 // populates the list of coffee objects and their quantities
 func flattenOrderItems(orderItems *[]hc.OrderItem) []interface{} {
