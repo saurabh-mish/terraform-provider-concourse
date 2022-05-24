@@ -7,13 +7,6 @@ terraform {
   }
 }
 
-provider "hashicups" {}
-
-//provider "hashicups" {
-//  username = "education"
-//  password = "test123"
-//}
-
 module "psl" {
   source = "./coffee"
 
