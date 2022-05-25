@@ -8,35 +8,14 @@ import (
 	"strings"
 )
 
-// GetAllOrders - Returns all user's order
-func (c *Client) GetAllOrders(authToken *string) (*[]Order, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/orders", c.HostURL), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	body, err := c.doRequest(req, authToken)
-	if err != nil {
-		return nil, err
-	}
-
-	orders := []Order{}
-	err = json.Unmarshal(body, &orders)
-	if err != nil {
-		return nil, err
-	}
-
-	return &orders, nil
-}
-
 // GetOrder - Returns a specifc order
-func (c *Client) GetOrder(orderID string, authToken *string) (*Order, error) {
+func (c *Client) GetOrder(orderID string) (*Order, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/orders/%s", c.HostURL, orderID), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := c.doRequest(req, authToken)
+	body, err := c.doRequest(req)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +30,7 @@ func (c *Client) GetOrder(orderID string, authToken *string) (*Order, error) {
 }
 
 // CreateOrder - Create new order
-func (c *Client) CreateOrder(orderItems []OrderItem, authToken *string) (*Order, error) {
+func (c *Client) CreateOrder(orderItems []OrderItem) (*Order, error) {
 	rb, err := json.Marshal(orderItems)
 	if err != nil {
 		return nil, err
@@ -62,7 +41,7 @@ func (c *Client) CreateOrder(orderItems []OrderItem, authToken *string) (*Order,
 		return nil, err
 	}
 
-	body, err := c.doRequest(req, authToken)
+	body, err := c.doRequest(req)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +56,7 @@ func (c *Client) CreateOrder(orderItems []OrderItem, authToken *string) (*Order,
 }
 
 // UpdateOrder - Updates an order
-func (c *Client) UpdateOrder(orderID string, orderItems []OrderItem, authToken *string) (*Order, error) {
+func (c *Client) UpdateOrder(orderID string, orderItems []OrderItem) (*Order, error) {
 	rb, err := json.Marshal(orderItems)
 	if err != nil {
 		return nil, err
@@ -88,7 +67,7 @@ func (c *Client) UpdateOrder(orderID string, orderItems []OrderItem, authToken *
 		return nil, err
 	}
 
-	body, err := c.doRequest(req, authToken)
+	body, err := c.doRequest(req)
 	if err != nil {
 		return nil, err
 	}
@@ -103,13 +82,13 @@ func (c *Client) UpdateOrder(orderID string, orderItems []OrderItem, authToken *
 }
 
 // DeleteOrder - Deletes an order
-func (c *Client) DeleteOrder(orderID string, authToken *string) error {
+func (c *Client) DeleteOrder(orderID string) error {
 	req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/orders/%s", c.HostURL, orderID), nil)
 	if err != nil {
 		return err
 	}
 
-	body, err := c.doRequest(req, authToken)
+	body, err := c.doRequest(req)
 	if err != nil {
 		return err
 	}
