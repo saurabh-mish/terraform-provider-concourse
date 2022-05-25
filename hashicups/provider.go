@@ -27,7 +27,7 @@ func Provider() *schema.Provider {
 			"hashicups_order": resourceOrder(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"hashicups_order":   dataSourceOrder(),
+			"hashicups_order": dataSourceOrder(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
