@@ -4,7 +4,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
 
-	"github.com/saurabh-mish/terraform-provider-concourse/hashicups"
+	"github.com/saurabh-mish/terraform-provider-hashicups/hashicups"
 )
 
 func main() {
