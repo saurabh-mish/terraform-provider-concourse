@@ -1,7 +1,7 @@
 HOSTNAME=hashicorp.com
 NAMESPACE=edu
 TYPE=provider
-NAME=hashicups
+NAME=concourse
 BINARY=terraform-${TYPE}-${NAME}
 VERSION=0.3.1
 OS_ARCH=darwin_arm64
