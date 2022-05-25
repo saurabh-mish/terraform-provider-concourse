@@ -148,3 +148,7 @@ It has the following structure:
 + Remove all unused containers, volumes, networks and images
 
   `docker system prune -a --volumes`
+
+#### References
+
++ 

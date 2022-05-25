@@ -1,4 +1,4 @@
-package hashicups
+package client
 
 // Order -
 type Order struct {
