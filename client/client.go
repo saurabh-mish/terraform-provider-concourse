@@ -1,22 +1,21 @@
-package client
+package hashicups
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strings"
 	"time"
 )
 
 // HostURL - Default Hashicups URL
-const HostURL string = "http://localhost:9090"
+const HostURL string = "http://localhost:19090"
 
 // Client -
 type Client struct {
 	HostURL    string
 	HTTPClient *http.Client
 	Token      string
+	Auth       AuthStruct
 }
 
 // AuthStruct -
@@ -37,46 +36,41 @@ func NewClient(host, username, password *string) (*Client, error) {
 	c := Client{
 		HTTPClient: &http.Client{Timeout: 10 * time.Second},
 		// Default Hashicups URL
-		HostURL: "http://localhost:9090",
+		HostURL: HostURL,
 	}
 
 	if host != nil {
 		c.HostURL = *host
 	}
 
-	if (username != nil) && (password != nil) {
-		// form request body
-		rb, err := json.Marshal(AuthStruct{
-			Username: *username,
-			Password: *password,
-		})
-		if err != nil {
-			return nil, err
-		}
-
-		// authenticate
-		req, err := http.NewRequest("POST", fmt.Sprintf("%s/signin", c.HostURL), strings.NewReader(string(rb)))
-		if err != nil {
-			return nil, err
-		}
-
-		body, err := c.doRequest(req)
-
-		// parse response body
-		ar := AuthResponse{}
-		err = json.Unmarshal(body, &ar)
-		if err != nil {
-			return nil, err
-		}
-
-		c.Token = ar.Token
+	// If username or password not provided, return empty client
+	if username == nil || password == nil {
+		return &c, nil
 	}
+
+	c.Auth = AuthStruct{
+		Username: *username,
+		Password: *password,
+	}
+
+	ar, err := c.SignIn()
+	if err != nil {
+		return nil, err
+	}
+
+	c.Token = ar.Token
 
 	return &c, nil
 }
 
-func (c *Client) doRequest(req *http.Request) ([]byte, error) {
-	req.Header.Set("Authorization", c.Token)
+func (c *Client) doRequest(req *http.Request, authToken *string) ([]byte, error) {
+	token := c.Token
+
+	if authToken != nil {
+		token = *authToken
+	}
+
+	req.Header.Set("Authorization", token)
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
