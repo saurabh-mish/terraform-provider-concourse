@@ -36,13 +36,7 @@ Performs read operation on a locally running API.
 
 + Read
 
-  + All coffee
-
-    `curl localhost:19090/coffees`
-
-  + Order ID
-
-    `curl -X GET -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID>`
+  `curl -X GET -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID>`
 
 + Create
 
@@ -148,7 +142,3 @@ It has the following structure:
 + Remove all unused containers, volumes, networks and images
 
   `docker system prune -a --volumes`
-
-#### References
-
-+ 
