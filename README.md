@@ -1,6 +1,6 @@
 # Hashicups Provider
 
-Performs read operation on a locally running API.
+Improved version of [custom Terraform provider][1] to perform create, read, update, and delete operations on a locally running API.
 
 ## Run API locally
 
@@ -8,51 +8,19 @@ Performs read operation on a locally running API.
 
 + Run API
 
-  `cd docker_compose && docker compose up`
+  `cd app && docker compose up`
 
 + Verify that API is running (**in a new terminal**)
 
   `curl localhost:19090/health`
 
-## REST Endpoints
-
-+ User Auth
-
-  + Sign-up
-
-    `curl -X POST localhost:19090/signup -d '{"username":"education", "password":"test123"}'`
-
-  + Sign-in
-
-    `curl -X POST localhost:19090/signin -d '{"username":"education", "password":"test123"}'`
-
-  + Set environment variables
-
-    ```
-    export HASHICUPS_USERNAME=education
-    export HASHICUPS_PASSWORD=test123
-    export HASHICUPS_TOKEN="ey ..."
-    ```
-
-+ Read
-
-  `curl -X GET -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID>`
-
-+ Create
-
-  `curl -X POST -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders -d '[{"coffee": { "id":1 }, "quantity":2}, {"coffee": { "id":3 }, "quantity":2}]'`
-
-+ Update
-
-  `curl -X PUT -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID> -d  '[{"coffee": { "id":1 }, "quantity":1}, {"coffee": { "id":3 }, "quantity":3}]'`
-
-+ Delete
-
-  `curl -X DELETE -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID>`
-
 ## Data Structure
 
-The *order* service requires coffee ID and quantity.
+The *order* service requires
+
+1. coffee ID
+
+2. quantity
 
 It has the following structure:
 
@@ -88,6 +56,42 @@ It has the following structure:
 }
 ```
 
+## REST Endpoints
+
++ User Authentication
+
+  + Sign-up
+
+    `curl -X POST localhost:19090/signup -d '{"username":"education", "password":"test123"}'`
+
+  + Sign-in
+
+    `curl -X POST localhost:19090/signin -d '{"username":"education", "password":"test123"}'`
+
+  + Set environment variables
+
+    ```
+    export HASHICUPS_USERNAME=education
+    export HASHICUPS_PASSWORD=test123
+    export HASHICUPS_TOKEN="ey ..."
+    ```
+
++ Read
+
+  `curl -X GET -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID>`
+
++ Create
+
+  `curl -X POST -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders -d '[{"coffee": { "id":1 }, "quantity":2}, {"coffee": { "id":3 }, "quantity":2}]'`
+
++ Update
+
+  `curl -X PUT -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID> -d  '[{"coffee": { "id":1 }, "quantity":1}, {"coffee": { "id":3 }, "quantity":3}]'`
+
++ Delete
+
+  `curl -X DELETE -H "Authorization: ${HASHICUPS_TOKEN}" localhost:19090/orders/<ID>`
+
 ## Provider
 
 + Create directory to store binary
@@ -115,9 +119,9 @@ It has the following structure:
 
 ## Terraform
 
-+ Change to `examples/` directory (from project root)
++ Change to `terraform/` directory (from project root)
 
-  `cd examples/`
+  `cd terraform/`
 
 + Initialize
 
@@ -142,3 +146,7 @@ It has the following structure:
 + Remove all unused containers, volumes, networks and images
 
   `docker system prune -a --volumes`
+
+----
+
+[1]: https://learn.hashicorp.com/collections/terraform/providers
