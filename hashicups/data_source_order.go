@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	//hc "github.com/hashicorp-demoapp/hashicups-client-go"
-  "github.com/saurabh-mish/terraform-provider-hashicups/client"
+  "github.com/saurabh-mish/terraform-provider-concourse/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
