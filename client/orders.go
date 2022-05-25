@@ -1,4 +1,4 @@
-package hashicups
+package client
 
 import (
 	"encoding/json"
