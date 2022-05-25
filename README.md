@@ -133,7 +133,9 @@ It has the following structure:
 
   `terraform apply --auto-approve`
 
-## Docker Cleanup
+## Miscellaneous
+
+#### Docker Cleanup
 
 + Delete all images
 
