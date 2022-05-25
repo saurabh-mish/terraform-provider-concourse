@@ -119,9 +119,9 @@ It has the following structure:
 
 ## Terraform
 
-+ Change to `terraform/` directory (from project root)
++ Change to `iac/` directory
 
-  `cd terraform/`
+  `cd iac/`
 
 + Initialize
 
