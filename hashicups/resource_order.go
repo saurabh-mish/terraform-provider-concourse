@@ -1,4 +1,3 @@
-
 package hashicups
 
 import (
@@ -6,7 +5,6 @@ import (
 	"strconv"
 	"time"
 
-	//hc "github.com/hashicorp-demoapp/hashicups-client-go"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/saurabh-mish/terraform-provider-concourse/client"
@@ -218,10 +216,6 @@ func flattenCoffee(coffee client.Coffee) []interface{} {
 
 	return []interface{}{c}
 }
-
-
-
-
 
 /*
 func resourceOrder() *schema.Resource {
