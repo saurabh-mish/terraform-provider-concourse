@@ -1,11 +1,8 @@
-module github.com/saurabh-mish/terraform-provider-hashicups
+module github.com/saurabh-mish/terraform-provider-concourse
 
 go 1.18
 
-require (
-	github.com/hashicorp-demoapp/hashicups-client-go v0.0.0-20200508203820-4c67e90efb8e
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.16.0
-)
+require github.com/hashicorp/terraform-plugin-sdk/v2 v2.16.0
 
 require (
 	github.com/agext/levenshtein v1.2.2 // indirect
