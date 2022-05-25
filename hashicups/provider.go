@@ -3,7 +3,8 @@ package hashicups
 import (
 	"context"
 
-	"github.com/hashicorp-demoapp/hashicups-client-go"
+	//"github.com/hashicorp-demoapp/hashicups-client-go"
+  "github.com/saurabh-mish/terraform-provider-hashicups/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -24,8 +25,8 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-      "hashicups_order": resourceOrder(),
-    },
+			"hashicups_order": resourceOrder(),
+		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"hashicups_coffees": dataSourceCoffees(),
 			"hashicups_order":   dataSourceOrder(),

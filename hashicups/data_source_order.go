@@ -4,7 +4,8 @@ import (
 	"context"
 	"strconv"
 
-	hc "github.com/hashicorp-demoapp/hashicups-client-go"
+	//hc "github.com/hashicorp-demoapp/hashicups-client-go"
+  "github.com/saurabh-mish/terraform-provider-hashicups/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -58,7 +59,7 @@ func dataSourceOrder() *schema.Resource {
 }
 
 func dataSourceOrderRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	c := m.(*hc.Client)
+	c := m.(*client.Client)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
@@ -80,7 +81,7 @@ func dataSourceOrderRead(ctx context.Context, d *schema.ResourceData, m interfac
 	return diags
 }
 
-func flattenOrderItemsData(orderItems *[]hc.OrderItem) []interface{} {
+func flattenOrderItemsData(orderItems *[]client.OrderItem) []interface{} {
 	if orderItems != nil {
 		ois := make([]interface{}, len(*orderItems), len(*orderItems))
 
