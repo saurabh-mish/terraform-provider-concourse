@@ -26,9 +26,13 @@ Performs read operation on a locally running API.
 
     `curl -X POST localhost:19090/signin -d '{"username":"education", "password":"test123"}'`
 
-  + Set token
+  + Set environment variables
 
-    `export HASHICUPS_TOKEN="ey ..."`
+    ```
+    export HASHICUPS_USERNAME=education
+    export HASHICUPS_PASSWORD=test123
+    export HASHICUPS_TOKEN="ey ..."
+    ```
 
 + Read
 
@@ -92,24 +96,28 @@ It has the following structure:
 
 ## Provider
 
-  + Define directory as module root
++ Create directory to store binary
 
-    `go mod init github.com/saurabh-mish/terraform-provider-concourse`
+  `mkdir ~/.terraform.d/plugins/hashicorp.com/edu/hashicups/0.3.1/darwin_arm64`
 
-  + Install dependencies
++ Define directory as module root
 
-    `go mod tidy`
+  `go mod init github.com/saurabh-mish/terraform-provider-hashicups`
 
-  + Build provider and install locally using Makefile
++ Install dependencies
 
-    ```
-    make build
-    make install
-    ```
+  `go mod tidy`
 
-  + Execute binary
++ Build provider and install locally using Makefile
 
-    `./terraform-provider-concourse`
+  ```
+  make build
+  make install
+  ```
+
++ Execute binary
+
+  `./terraform-provider-hashicups`
 
 ## Terraform
 
@@ -124,3 +132,17 @@ It has the following structure:
 + Apply read
 
   `terraform apply --auto-approve`
+
+## Docker Cleanup
+
++ Delete all images
+
+  `docker rmi -f $(docker images -aq)`
+
++ Delete all containers including its volumes
+
+  `docker rm -vf $(docker ps -aq)`
+
++ Remove all unused containers, volumes, networks and images
+
+  `docker system prune -a --volumes`
