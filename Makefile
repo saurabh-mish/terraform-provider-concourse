@@ -8,6 +8,9 @@ OS_ARCH=darwin_arm64
 
 default: build
 
+format:
+	go fmt ./...
+
 build:
 	go build -o ${BINARY}
 

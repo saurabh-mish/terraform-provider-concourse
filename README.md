@@ -102,7 +102,7 @@ It has the following structure:
 
 + Define directory as module root
 
-  `go mod init github.com/saurabh-mish/terraform-provider-hashicups`
+  `go mod init github.com/saurabh-mish/terraform-provider-concourse`
 
 + Install dependencies
 
@@ -117,7 +117,7 @@ It has the following structure:
 
 + Execute binary
 
-  `./terraform-provider-hashicups`
+  `./terraform-provider-concourse`
 
 ## Terraform
 
