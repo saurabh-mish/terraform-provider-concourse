@@ -1,12 +1,15 @@
 package main
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/plugin"
-	"github.com/saurabh-mish/terraform-provider-concourse/app"
+	"fmt"
+	"github.com/saurabh-mish/terraform-provider-concourse/client"
 )
 
 func main() {
-	plugin.Serve(&plugin.ServeOpts {
-		ProviderFunc: app.Provider,
-	})
+	username, password := client.CheckCredentials()
+	//fmt.Printf("Concourse Email:    %s\n", *username)
+	//fmt.Printf("Concourse Password: %s\n", *password)
+
+	respData := client.GetAuthData(username, password)
+	fmt.Println(respData)
 }
