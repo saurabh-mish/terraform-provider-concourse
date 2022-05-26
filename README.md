@@ -2,17 +2,19 @@
 
 Terraform provider for Concourse Labs
 
-## References
+## Data Structures
 
-+ [Official][1]
-+ [YouTube Overview 1][2]
-+ [YouTube Overview 2][3]
-+ [YouTube Implementation 1][4]
-+ [YouTube Implementation 2][5]
+#### Authentication
 
-[1]: https://learn.hashicorp.com/tutorials/terraform/provider-use
-[2]: https://www.youtube.com/watch?v=noxwUVet5RE
-[3]: https://www.youtube.com/watch?v=OoSAepwT0l4
-[4]: https://www.youtube.com/watch?v=gNFBWmKNlxA
-[5]: https://www.youtube.com/watch?v=3XayxW5B-ig&t=449s
-[6]: https://learn.hashicorp.com/collections/terraform/providers
+Authenticate to get a user token
+
+```
+curl --request POST 'https://auth.prod.concourselabs.io/api/v1/oauth/token' \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode 'username=user+113@concourselabs.com' \
+  --data-urlencode 'password=decentPassword' \
+  --data-urlencode 'grant_type=password' \
+  --data-urlencode 'scope=INSTITUTION POLICY MODEL IDENTITY RUNTIME_DATA' \
+  | jq
+```
