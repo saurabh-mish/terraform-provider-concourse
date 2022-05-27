@@ -1,7 +1,7 @@
 package client
 
 import (
-	"bytes"
+	//"bytes"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -12,6 +12,33 @@ import (
 	"os"
 	"strings"
 )
+
+type ConcourseAuth struct {
+	AccessToken  string     `json:"access_token"`
+	TokenType    string     `json:"token_type"`
+	RefreshToken string     `json:"refresh_token"`
+	ExpiresIn    int16      `json:"expires_in"`
+	/*
+	// Ignore (do not process) the below fields in response data
+
+	Scope        string     `json:"scope"`
+	Extra        ExtraInfo  `json:"extra"`
+	Jti          string     `json:"jti"`
+	*/
+}
+
+/*
+// Ignore inner struct
+
+type ExtraInfo struct {
+	InstitutionID int
+	UserID        int
+	UserEmail     string
+	GroupIDs      []int
+	SurfaceIDs    []int
+}
+*/
+
 
 func CheckCredentials() (*string, *string) {
 	var concourseUser string
@@ -36,7 +63,7 @@ func CheckCredentials() (*string, *string) {
 	return &concourseUser, &concoursePass
 }
 
-func GetAuthData(user *string, pass *string) string {
+func GetAuthData(user *string, pass *string) ConcourseAuth {
 	var endpoint string = "https://auth.prod.concourselabs.io/api/v1/oauth/token"
 	payload := url.Values{
 		"username":   {*user},
@@ -45,14 +72,15 @@ func GetAuthData(user *string, pass *string) string {
 		"scope":      {"INSTITUTION POLICY MODEL IDENTITY RUNTIME_DATA"},
 	}
 
-	// Efficient URL-encoded payload
 	req, err := http.NewRequest("POST", endpoint, strings.NewReader(payload.Encode()))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Unable to perform 'post' request: %v", err)
 	}
 
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded") // required for form data encoded request
-	req.Header.Add("Accept", "application/json")
+	req.Header = http.Header{
+		"Content-Type": {"application/x-www-form-urlencoded"},
+		"Accept": {"application/json"},
+	}
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -60,22 +88,19 @@ func GetAuthData(user *string, pass *string) string {
 	}
 	defer resp.Body.Close()
 
-	//Common attributes: resp.Status, resp.Header
-	body, err := ioutil.ReadAll(resp.Body) // resp.Body is a map object
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var prettyJSON bytes.Buffer
-	error := json.Indent(&prettyJSON, body, "", "\t")
-	if error != nil {
-		log.Fatalf("JSON parse error: %v", error)
-	}
+	var jsonData ConcourseAuth
+	json.Unmarshal(body, &jsonData)  // body is of []byte
+
 
 	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return prettyJSON.String() // string(prettyJSON.Bytes())    // string(body)
+		return jsonData
 	} else {
-		return ""
+		return ConcourseAuth{}
 	}
 }
 
