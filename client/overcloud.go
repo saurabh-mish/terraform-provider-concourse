@@ -1,106 +1,126 @@
 package client
 
 import (
-	//"bytes"
 	"encoding/json"
-	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
+	"time"
+	"fmt"
 )
 
-type ConcourseAuth struct {
+type ConcourseAuthReq struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	GrantType string `json:"grant_type"`
+	Scope string `json:"scope"`
+}
+
+type ConcourseAuthResp struct {
 	AccessToken  string     `json:"access_token"`
 	TokenType    string     `json:"token_type"`
 	RefreshToken string     `json:"refresh_token"`
 	ExpiresIn    int16      `json:"expires_in"`
-	/*
-	// Ignore (do not process) the below fields in response data
-
 	Scope        string     `json:"scope"`
-	Extra        ExtraInfo  `json:"extra"`
+	Extra        Extra_info `json:"extra"`
 	Jti          string     `json:"jti"`
-	*/
 }
 
-/*
-// Ignore inner struct
-
-type ExtraInfo struct {
+type Extra_info struct {
 	InstitutionID int
 	UserID        int
 	UserEmail     string
 	GroupIDs      []int
 	SurfaceIDs    []int
 }
-*/
 
 
-func CheckCredentials() (*string, *string) {
-	var concourseUser string
-	var concoursePass string
-	var present bool
-
-	concourseUser, present = os.LookupEnv("CONCOURSE_USERNAME")
-	if concourseUser == "" || !present {
-		fmt.Fprint(os.Stdout, "Environment variable 'CONCOURSE_USERNAME' empty or not set ...")
-	} else {
-		flag.StringVar(&concourseUser, "username", concourseUser, "Username (Email) for Concourse Labs")
-	}
-
-	concoursePass, present = os.LookupEnv("CONCOURSE_PASSWORD")
-	if concoursePass == "" || !present {
-		fmt.Fprint(os.Stdout, "Environment variable 'CONCOURSE_PASSWORD' empty or not set ...")
-	} else {
-		flag.StringVar(&concoursePass, "password", concoursePass, "Password for Concourse Labs")
-	}
-
-	flag.Parse()
-	return &concourseUser, &concoursePass
+type Client struct {
+	HostURL    string
+	HTTPClient *http.Client
+	Token      string
+	Auth       ConcourseAuthReq
 }
 
-func GetAuthData(user *string, pass *string) ConcourseAuth {
-	var endpoint string = "https://auth.prod.concourselabs.io/api/v1/oauth/token"
-	payload := url.Values{
-		"username":   {*user},
-		"password":   {*pass},
-		"grant_type": {"password"},
-		"scope":      {"INSTITUTION POLICY MODEL IDENTITY RUNTIME_DATA"},
+
+const endpoint string = "https://auth.prod.concourselabs.io/api/v1/oauth"
+
+
+func NewClient(user , pass *string) (*Client, error) {
+
+	jsonData := ConcourseAuthReq{
+		Username: *user,
+		Password: *pass,
+		GrantType: "password",
+		Scope: "INSTITUTION POLICY MODEL IDENTITY RUNTIME_DATA",
 	}
 
-	req, err := http.NewRequest("POST", endpoint, strings.NewReader(payload.Encode()))
-	if err != nil {
-		log.Fatalf("Unable to perform 'post' request: %v", err)
+	formData := url.Values{
+		"username":   {jsonData.Username},
+		"password":   {jsonData.Password},
+		"grant_type": {jsonData.GrantType},
+		"scope":      {jsonData.Scope},
 	}
 
-	req.Header = http.Header{
-		"Content-Type": {"application/x-www-form-urlencoded"},
-		"Accept": {"application/json"},
+	cl := Client{
+		HTTPClient: &http.Client{Timeout: 10 * time.Second},
+		HostURL: endpoint,
+		Auth: jsonData,
 	}
 
-	resp, err := http.DefaultClient.Do(req)
+	//ar, err := c.SignIn()
+
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/token", cl.HostURL), strings.NewReader(formData.Encode()))
 	if err != nil {
 		log.Fatal(err)
+		return nil, err
+	}
+
+	body, err := cl.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	// unmarshall
+	log.Println("Unmarshalling ...\n")
+	authResp := ConcourseAuthResp{}
+	err = json.Unmarshal(body, &authResp)
+	if err != nil {
+		return nil, err
+	}
+	log.Println(authResp)
+	log.Println("\nUnmarshal complete\n")
+
+	cl.Token = authResp.AccessToken
+
+	return &cl, nil
+}
+
+
+func (c *Client) doRequest(req *http.Request) ([]byte, error) {
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Accept", "application/json")
+
+	resp, err := c.HTTPClient.Do(req)
+	if err != nil {
+		log.Fatal(err)
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
+		return nil, err
 	}
 
-	var jsonData ConcourseAuth
-	json.Unmarshal(body, &jsonData)  // body is of []byte
-
-
-	if resp.StatusCode >= 200 && resp.StatusCode < 300 {
-		return jsonData
-	} else {
-		return ConcourseAuth{}
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status: %d, body: %s", resp.StatusCode, body)
 	}
+
+	return body, err
 }
 
