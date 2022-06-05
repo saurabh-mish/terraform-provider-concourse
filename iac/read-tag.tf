@@ -7,11 +7,6 @@ terraform {
   }
 }
 
-//provider concourse {
-//  username = "saurabh+113@concourselabs.com"
-//  password = "S@r8hM"
-//}
-
 data "concourse_attribute_tag" "freddie_mac" {
   id = 211012
 }
