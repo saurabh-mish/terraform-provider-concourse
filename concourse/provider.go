@@ -25,7 +25,7 @@ func Provider() *schema.Provider {
 		},
 		ResourcesMap: map[string]*schema.Resource{}, // will be done next
 		DataSourcesMap: map[string]*schema.Resource{
-			"attribute_tag": dataSourceAttributeTag(),
+			"concourse_attribute_tag": dataSourceAttributeTag(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
