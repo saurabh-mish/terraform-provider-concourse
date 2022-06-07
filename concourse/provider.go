@@ -2,6 +2,7 @@ package concourse
 
 import (
 	"context"
+	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -48,7 +49,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 			})
 			return nil, diags
 		}
-
+		log.Println("Username and password dont exist")
 		return c, diags
 	}
 
@@ -61,6 +62,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 		})
 		return nil, diags
 	}
-
+	log.Printf("Username %v and password %v:", username, password)
+	log.Printf("Client object %v", c)
 	return c, diags
 }
