@@ -70,9 +70,9 @@ func dataSourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m i
   d.Set("version", resp.Version)
   d.Set("created", resp.Created)
   d.Set("updated", resp.Updated)
-  d.Set("createdBy", resp.CreatedBy)
-  d.Set("updatedBy", resp.UpdatedBy)
-  d.Set("institutionId", resp.InstitutionId)
+  d.Set("created_by", resp.CreatedBy)
+  d.Set("updated_by", resp.UpdatedBy)
+  d.Set("institution_id", resp.InstitutionId)
   d.Set("name", resp.Name)
   d.Set("description", resp.Description)
 
