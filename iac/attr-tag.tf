@@ -9,6 +9,6 @@ terraform {
 
 # create and delete operations
 resource "concourse_attribute_tag" "tagtest" {
-	name = "saurabh test"
+	name = "saurabh test change"
 	description = "saurabh terraform provider test description"
 }
