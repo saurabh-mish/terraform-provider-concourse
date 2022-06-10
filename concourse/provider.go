@@ -24,7 +24,9 @@ func Provider() *schema.Provider {
 				DefaultFunc: schema.EnvDefaultFunc("CONCOURSE_PASSWORD", nil),
 			},
 		},
-		ResourcesMap: map[string]*schema.Resource{}, // will be done next
+		ResourcesMap: map[string]*schema.Resource{
+			"concourse_attribute_tag": resourceAttributeTag(),
+		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"concourse_attribute_tag": dataSourceAttributeTag(),
 		},

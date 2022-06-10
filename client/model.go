@@ -1,22 +1,7 @@
 package client
 
-/*
-// Response data structure for create, update, and delete operations
-
-{
-	"id": 212891,
-	"version": 0,
-	"created": "2022-05-29T20:18:50.190Z",
-	"updated": "2022-05-29T20:18:50.190Z",
-	"createdBy": 101685,
-	"updatedBy": 101685,
-	"institutionId": 113,
-	"name": "saurabh_test_name",
-	"description": "saurabh_test_description"
-}
-*/
-
-// JSON data structure of attribute tag response object
+// JSON response data structure of attribute tag response object
+// for create, read, and update operations
 type AttributeTag struct {
 	ID            int    `json:"id"`
 	Version       int    `json:"version"`
@@ -27,4 +12,9 @@ type AttributeTag struct {
 	InstitutionId int    `json:"institutionId"`
 	Name          string `json:"name"`
 	Description   string `json:"description"`
+}
+
+type AttrTagReq struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }

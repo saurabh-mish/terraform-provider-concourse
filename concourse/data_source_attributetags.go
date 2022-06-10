@@ -55,8 +55,6 @@ func dataSourceAttributeTag() *schema.Resource {
 
 func dataSourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	c := m.(*client.Client)
-
-	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
 	tagID := strconv.Itoa(d.Get("id").(int))
@@ -66,15 +64,15 @@ func dataSourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m i
 		return diag.FromErr(err)
 	}
 
-  d.Set("id", resp.ID)
-  d.Set("version", resp.Version)
-  d.Set("created", resp.Created)
-  d.Set("updated", resp.Updated)
-  d.Set("created_by", resp.CreatedBy)
-  d.Set("updated_by", resp.UpdatedBy)
-  d.Set("institution_id", resp.InstitutionId)
-  d.Set("name", resp.Name)
-  d.Set("description", resp.Description)
+	d.Set("id", resp.ID)
+	d.Set("version", resp.Version)
+	d.Set("created", resp.Created)
+	d.Set("updated", resp.Updated)
+	d.Set("created_by", resp.CreatedBy)
+	d.Set("updated_by", resp.UpdatedBy)
+	d.Set("institution_id", resp.InstitutionId)
+	d.Set("name", resp.Name)
+	d.Set("description", resp.Description)
 
 
 	// set response body

@@ -1,8 +1,10 @@
 package client
 
 import (
+	"bytes"
 	"encoding/json"
 	"log"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -11,14 +13,13 @@ const resource = "/institutions/113/attribute-tags"
 
 // GetOrder - Returns a specifc order
 func (c *Client) GetAttributeTag(tagID string) (*AttributeTag, error) {
-	//attrTag := strconv.Itoa(tagId)
 	endpoint := endp + resource + "/" + tagID
-
 	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
-		log.Println("Endpoint unavailable ...")
+		log.Println("GET endpoint unavailable ...")
 		return nil, err
 	}
+
 	apiToken := "Bearer " + c.Token
 	req.Header.Add("Authorization", apiToken)
 
@@ -37,26 +38,37 @@ func (c *Client) GetAttributeTag(tagID string) (*AttributeTag, error) {
 	return &attrTag, nil
 }
 
-/*
-func ReadAttributeTag(tagId int) {
-	attrTag := strconv.Itoa(tagId)
-	endpoint := url + resource + "/" + attrTag
 
-	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
-	if err != nil {
-		log.Println("Endpoint unavailable ...")
+func (c *Client) CreateAttributeTag(attTag AttrTagReq) (*AttributeTag, error) {
+
+	endpoint := endp + resource
+
+	jsonPayload := &AttrTagReq{
+		Name:        attTag.Name,
+		Description: attTag.Description,
 	}
 
-	apiToken := "Bearer " + getAccessToken()
+	payloadBuf := new(bytes.Buffer)
+	json.NewEncoder(payloadBuf).Encode(jsonPayload)
+	req, err := http.NewRequest(http.MethodPost, endpoint, payloadBuf)
+	if err != nil {
+		log.Println("POST endpoint unavailable ...")
+	}
+
+	apiToken := "Bearer " + c.Token
 	req.Header.Add("Authorization", apiToken)
+	req.Header.Add("Content-Type", "application/json")
+
 	resp, _ := http.DefaultClient.Do(req)
-
 	defer resp.Body.Close()
-
-	var jsonData AttrTagResp
 	body, _ := ioutil.ReadAll(resp.Body)
-	json.Unmarshal(body, &jsonData)
 
-	log.Println(jsonData)
+	attrTagResp := AttributeTag{}
+	err = json.Unmarshal(body, &attrTagResp)
+	if err != nil {
+		log.Println("Error unmarshalling ...")
+		return nil, err
+	}
+
+	return &attrTagResp, nil
 }
-*/
