@@ -10,15 +10,25 @@ It uses an executable binary from the local terraform directory to perform opera
 
   Examples:
 
-  + Mac with Intel processor would be `darwin_amd64`
-  + Mac with Apple processor would be `darwin_arm64`
+  + Mac with Intel processor - `darwin_amd64`
+  + Mac with Apple processor - `darwin_arm64`
+  + Windows (64-bit) with Intel processor - `windows_amd64`
+  + Windows (64-bit) with AMD processor - `windows_arm64`
+  + Linux (64-bit) with Intel processor - `linux_amd64`
 
 + Create a terraform plugin directory based on `$GOARCH`
 
   `mkdir -p ~/.terraform.d/plugins/hashicorp.com/edu/concourse/0.3.1/<$GOARCH>`
 
-+ Modify `OS_ARCH` in the Makefile
++ Clone this repository locally
 
+  `git clone git@github.com:saurabh-mish/terraform-provider-concourse.git`
+
++ Navigate to project root
+
+  `cd ./terraform-provider-concourse`
+
++ Modify `OS_ARCH` and `BINARY` in the Makefile as per your operating system
 
 + Build the binary
 
