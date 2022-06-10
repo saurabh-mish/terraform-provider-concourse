@@ -53,6 +53,9 @@ func resourceAttributeTag() *schema.Resource {
 				Required: true,
 			},
 		},
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 	}
 }
 
@@ -105,11 +108,22 @@ func resourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m int
 
 
 func resourceAttributeTagUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-  return resourceAttributeTagRead(ctx, d, m)
+	return resourceAttributeTagRead(ctx, d, m)
 }
 
 func resourceAttributeTagDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-  var diags diag.Diagnostics
 
-  return diags
+	c := m.(*client.Client)
+	var diags diag.Diagnostics
+
+	tagID := d.Id()
+
+	err := c.DeleteAttributeTag(tagID)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
+	d.SetId("")
+
+	return diags
 }

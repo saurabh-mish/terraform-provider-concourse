@@ -6,6 +6,7 @@ import (
 	"log"
 	"io/ioutil"
 	"net/http"
+	"errors"
 )
 
 const endp = "https://prod.concourselabs.io/api/model/v1"
@@ -71,4 +72,29 @@ func (c *Client) CreateAttributeTag(attTag AttrTagReq) (*AttributeTag, error) {
 	}
 
 	return &attrTagResp, nil
+}
+
+
+func (c *Client) DeleteAttributeTag(tagID string) error {
+	endpoint := endp + resource + "/" + tagID
+	req, err := http.NewRequest(http.MethodDelete, endpoint, nil)
+	if err != nil {
+		log.Println("DELETE endpoint unavailable ...")
+		return err
+	}
+
+	apiToken := "Bearer " + c.Token
+	req.Header.Add("Authorization", apiToken)
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode >= 300 {
+		return errors.New(resp.Status)
+	}
+
+	return nil
 }
