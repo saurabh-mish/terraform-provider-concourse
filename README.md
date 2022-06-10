@@ -11,7 +11,6 @@ It uses an executable binary from the local terraform directory to perform opera
   Examples:
 
   + Mac with Intel processor would be `darwin_amd64`
-
   + Mac with Apple processor would be `darwin_arm64`
 
 + Create a terraform plugin directory based on `$GOARCH`
@@ -33,7 +32,7 @@ It uses an executable binary from the local terraform directory to perform opera
 
 This release supports read operation. It is being expanded to support create, update, and delete operations.
 
-+ Set environment variables corresponding to your Concourse login
++ Set environment variables corresponding to your [Concourse login][2]
 
   ```
   export CONCOURSE_USERNAME="user+113@concourselabs.com"
@@ -71,3 +70,4 @@ This release supports read operation. It is being expanded to support create, up
 ---
 
 [1]: https://go.dev/doc/install/source#environment
+[2]: https://prod.concourselabs.io/
