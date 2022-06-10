@@ -47,9 +47,14 @@ This release supports read operation. It is being expanded to support create, up
 
 + Remove all terraform state files, cache files, etc. as they could be associated with a different build version of the provider
 
-  `rm -rf .terraform/ .terraform.lock.hcl terraform.tfstate`
+  `rm -rf .terraform .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup`
 
-+ Specify an attribute tag ID in `read-tag.tf` (two such IDs are predefined for demo)
++ The `data` block in `read-tag.tf` is used to retrieve existing resources. Two such IDs are predefined for demo
+
++ The `resource` block in the `attr-tag.tf` is used to create, update, and delete attribute tags.
+
+
+## Terraform
 
 + Initialize Terraform
 
@@ -66,6 +71,7 @@ This release supports read operation. It is being expanded to support create, up
 + Destroy (update local TF files)
 
   `terraform destroy --auto-approve`
+
 
 ---
 
