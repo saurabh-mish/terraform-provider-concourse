@@ -28,7 +28,7 @@ It uses an executable binary from the local terraform directory to perform opera
 
   `cd ./terraform-provider-concourse`
 
-+ Modify `OS_ARCH` and `BINARY` in the Makefile as per your operating system
++ Modify `OS_ARCH` and `BINARY` in the *Makefile* based on your operating system
 
 + Build the binary
 
@@ -78,7 +78,7 @@ This release supports read operation. It is being expanded to support create, up
 
   `terraform apply --auto-approve`
 
-+ Destroy (update local TF files)
++ Destroy
 
   `terraform destroy --auto-approve`
 
