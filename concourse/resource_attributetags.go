@@ -3,6 +3,7 @@ package concourse
 import (
 	"context"
 	"strconv"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,6 +17,11 @@ func resourceAttributeTag() *schema.Resource {
 		UpdateContext: resourceAttributeTagUpdate,
     	DeleteContext: resourceAttributeTagDelete,
 		Schema: map[string]*schema.Schema{
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -108,8 +114,28 @@ func resourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m int
 
 
 func resourceAttributeTagUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+
+	c := m.(*client.Client)
+
+	tagID := d.Id()
+
+	if d.HasChange("name") || d.HasChange("description") {
+		attrTagData := client.AttrTagReq{
+			Name: d.Get("name").(string),
+			Description: d.Get("description").(string),
+		}
+
+		_, err := c.UpdateAttributeTag(tagID, attrTagData)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+
+		d.Set("last_updated", time.Now().Format(time.RFC850))
+	}
+
 	return resourceAttributeTagRead(ctx, d, m)
 }
+
 
 func resourceAttributeTagDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
