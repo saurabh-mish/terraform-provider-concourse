@@ -7,8 +7,18 @@ terraform {
   }
 }
 
-# create and delete operations
-resource "concourse_attribute_tag" "tagtest" {
-	name = "saurabh test change"
-	description = "saurabh terraform provider test description"
+# create, update, and delete operations
+resource "concourse_attribute_tag" "demo" {
+	name = "saurabh test name"
+	description = "saurabh test description"
+}
+
+# read operation
+data "concourse_attribute_tag" "custom_tag" {
+  id = concourse_attribute_tag.demo.id
+}
+
+# print to stdout
+output "attr_tag" {
+  value = data.concourse_attribute_tag.custom_tag
 }
