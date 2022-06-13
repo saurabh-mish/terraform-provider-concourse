@@ -39,3 +39,6 @@ jobs:
       run: |
         go test -v ./concourse
         go test ./concourse -race -coverprofile=profile.out -covermode=atomic
+
+    - name: Build application
+      run: go build -o terraform-provider-concourse
