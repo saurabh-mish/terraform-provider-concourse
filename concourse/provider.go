@@ -2,7 +2,6 @@ package concourse
 
 import (
 	"context"
-	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,20 +37,18 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	username := d.Get("username").(string)
 	password := d.Get("password").(string)
 
-	// Warning or errors can be collected in a slice type
-	var diags diag.Diagnostics
+	var diags diag.Diagnostics  // slice for warnings and errors
 
 	if (username != "") && (password != "") {
 		c, err := client.NewClient(nil, &username, &password)
 		if err != nil {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
-				Summary:  "Unable to create Concourse client",
-				Detail:   "Unable to auth user for authenticated Concourse client",
+				Summary:  "Credentials not present",
+				Detail:   "Environment variables for username and password dont exist",
 			})
 			return nil, diags
 		}
-		log.Println("Username and password dont exist")
 		return c, diags
 	}
 
@@ -59,12 +56,10 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Unable to create Concourse client",
-			Detail:   "Unable to auth user for unauthenticated Concourse client",
+			Summary:  "Unauthorized access",
+			Detail:   "Unable to authenticate user with Concourse",
 		})
 		return nil, diags
 	}
-	log.Printf("Username %v and password %v:", username, password)
-	log.Printf("Client object %v", c)
 	return c, diags
 }
