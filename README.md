@@ -59,14 +59,14 @@ This release supports read operation. It is being expanded to support create, up
 
   `rm -rf .terraform .terraform.lock.hcl terraform.tfstate terraform.tfstate.backup`
 
-+ The `data` block in `read-tag.tf` is used to retrieve existing resources. Two such IDs are predefined for demo
++ The `data` block is used to retrieve existing resources.
 
-+ The `resource` block in the `attr-tag.tf` is used to create, update, and delete attribute tags.
++ The `resource` block is used to create, update, and delete attribute tags.
 
 
-## Terraform
+## Operations
 
-+ Initialize Terraform
++ Initialize
 
   `terraform init`
 
