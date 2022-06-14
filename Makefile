@@ -1,5 +1,5 @@
-HOSTNAME=hashicorp.com
-NAMESPACE=edu
+HOSTNAME=concourselabs.com
+NAMESPACE=prod
 TYPE=provider
 NAME=concourse
 BINARY=terraform-${TYPE}-${NAME}
@@ -10,6 +10,9 @@ default: build
 
 format:
 	go fmt ./...
+
+test:
+	go test ./concourse
 
 build:
 	go build -o ${BINARY}
