@@ -20,7 +20,11 @@ It uses an executable binary from the local terraform directory to perform opera
 
 + Create a terraform plugin directory based on `$GOARCH`
 
-  `mkdir -p ~/.terraform.d/plugins/hashicorp.com/edu/concourse/0.3.1/<$GOARCH>`
+  `~/.terraform.d/plugins/hashicorp.com/edu/concourse/0.3.1/<$GOARCH>`
+
+  OR
+
+  `%APPDATA%\terraform.d\plugins\hashicorp.com\edu\concourse\0.3.1\<$GOARCH>`
 
 + Clone this repository locally
 
@@ -30,7 +34,11 @@ It uses an executable binary from the local terraform directory to perform opera
 
   `cd ./terraform-provider-concourse`
 
-+ Modify `OS_ARCH` and `BINARY` in the *Makefile* based on your operating system
++ **Modify `OS_ARCH` and `BINARY` in the *Makefile* based on your operating system**
+
++ Run tests
+
+  `make test`
 
 + Build the binary
 
