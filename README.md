@@ -1,3 +1,5 @@
+[![Concourse Terraform Provider](https://github.com/saurabh-mish/terraform-provider-concourse/actions/workflows/ci.yaml/badge.svg)](https://github.com/saurabh-mish/terraform-provider-concourse/actions/workflows/ci.yaml)
+
 # Terraform Provider for Concourse Labs
 
 This provider is currently under development and has not been published to the Terraform registry.
