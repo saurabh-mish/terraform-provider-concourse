@@ -31,7 +31,7 @@ func TestProvider_impl(t *testing.T) {
 	var _ *schema.Provider = Provider()
 }
 
-func TestEnvironmentVariables(t *testing.T) {
+func TestAcceptancePreCheck(t *testing.T) {
 	if os.Getenv("CONCOURSE_USERNAME") == "" || os.Getenv("CONCOURSE_PASSWORD") == "" {
 		t.Errorf("Environment variables CONCOURSE_USERNAME and CONCOURSE_PASSWORD must be set")
 	}
