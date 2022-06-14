@@ -1,9 +1,10 @@
-# Local .terraform directories
+# Rerraform directories and files
+	# cache directory
 **/.terraform/*
-
-# .tfstate files
+	# state file, backup, and lock
 *.tfstate
 *.tfstate.*
+*.terraform.lock.hcl
 
 # Crash log files
 crash.log
