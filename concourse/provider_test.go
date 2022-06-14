@@ -10,13 +10,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 )
 
-var testAcceptanceProviders map[string]*schema.Provider
-var testAcceptanceProvider *schema.Provider
+var testAccProviders map[string]*schema.Provider
+var testAccProvider *schema.Provider
 
 func init() {
-	testAcceptanceProvider = Provider()
-	testAcceptanceProviders = map[string]*schema.Provider{
-		"attrtag": testAcceptanceProvider,
+	testAccProvider = Provider()
+	testAccProviders = map[string]*schema.Provider{
+		"attrtag": testAccProvider,
 	}
 }
 
@@ -31,7 +31,7 @@ func TestProvider_impl(t *testing.T) {
 	var _ *schema.Provider = Provider()
 }
 
-func TestAcceptancePreCheck(t *testing.T) {
+func testAccPreCheck(t *testing.T) {
 	if os.Getenv("CONCOURSE_USERNAME") == "" || os.Getenv("CONCOURSE_PASSWORD") == "" {
 		t.Errorf("Environment variables CONCOURSE_USERNAME and CONCOURSE_PASSWORD must be set")
 	}
