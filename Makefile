@@ -8,8 +8,9 @@ OS_ARCH=darwin_arm64
 
 default: build
 
-format:
+prep:
 	go fmt ./...
+	go mod tidy
 
 test:
 	go test ./concourse
