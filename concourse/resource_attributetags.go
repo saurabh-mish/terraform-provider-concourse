@@ -15,7 +15,7 @@ func resourceAttributeTag() *schema.Resource {
 		CreateContext: resourceAttributeTagCreate,
 		ReadContext:   resourceAttributeTagRead,
 		UpdateContext: resourceAttributeTagUpdate,
-    	DeleteContext: resourceAttributeTagDelete,
+		DeleteContext: resourceAttributeTagDelete,
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeString,
@@ -65,13 +65,12 @@ func resourceAttributeTag() *schema.Resource {
 	}
 }
 
-
 func resourceAttributeTagCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	c := m.(*client.Client)
 	var diags diag.Diagnostics
 
 	attrTagData := client.AttrTagReq{
-		Name: d.Get("name").(string),
+		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 	}
 
@@ -112,7 +111,6 @@ func resourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m int
 	return diags
 }
 
-
 func resourceAttributeTagUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	c := m.(*client.Client)
@@ -121,7 +119,7 @@ func resourceAttributeTagUpdate(ctx context.Context, d *schema.ResourceData, m i
 
 	if d.HasChange("name") || d.HasChange("description") {
 		attrTagData := client.AttrTagReq{
-			Name: d.Get("name").(string),
+			Name:        d.Get("name").(string),
 			Description: d.Get("description").(string),
 		}
 
@@ -135,7 +133,6 @@ func resourceAttributeTagUpdate(ctx context.Context, d *schema.ResourceData, m i
 
 	return resourceAttributeTagRead(ctx, d, m)
 }
-
 
 func resourceAttributeTagDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 

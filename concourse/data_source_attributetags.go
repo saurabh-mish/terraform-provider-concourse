@@ -64,7 +64,7 @@ func dataSourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m i
 		return diag.FromErr(err)
 	}
 
-	d.Set("id", resp.ID)
+	//d.Set("id", resp.ID)
 	d.Set("version", resp.Version)
 	d.Set("created", resp.Created)
 	d.Set("updated", resp.Updated)
@@ -73,7 +73,6 @@ func dataSourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m i
 	d.Set("institution_id", resp.InstitutionId)
 	d.Set("name", resp.Name)
 	d.Set("description", resp.Description)
-
 
 	// set response body
 	d.SetId(tagID)
