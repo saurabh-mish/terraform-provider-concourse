@@ -20,11 +20,11 @@ It uses an executable binary from the local terraform directory to perform opera
 
 + Create a terraform plugin directory based on `$GOARCH`
 
-  `~/.terraform.d/plugins/hashicorp.com/edu/concourse/0.3.1/<$GOARCH>`
+  `~/.terraform.d/plugins/concourselabs.com/prod/concourse/0.3.1/<$GOARCH>`
 
   OR
 
-  `%APPDATA%\terraform.d\plugins\hashicorp.com\edu\concourse\0.3.1\<$GOARCH>`
+  `%APPDATA%\terraform.d\plugins\concourselabs.com\prod\concourse\0.3.1\<$GOARCH>`
 
 + Clone this repository locally
 
