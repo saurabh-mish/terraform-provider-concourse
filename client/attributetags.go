@@ -3,15 +3,14 @@ package client
 import (
 	"bytes"
 	"encoding/json"
-	"log"
-	"io/ioutil"
-	"net/http"
 	"errors"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 const endp = "https://prod.concourselabs.io/api/model/v1"
 const resource = "/institutions/113/attribute-tags"
-
 
 func (c *Client) GetAttributeTag(tagID string) (*AttributeTag, error) {
 	endpoint := endp + resource + "/" + tagID
@@ -38,7 +37,6 @@ func (c *Client) GetAttributeTag(tagID string) (*AttributeTag, error) {
 
 	return &attrTag, nil
 }
-
 
 func (c *Client) CreateAttributeTag(attTag AttrTagReq) (*AttributeTag, error) {
 
@@ -74,7 +72,6 @@ func (c *Client) CreateAttributeTag(attTag AttrTagReq) (*AttributeTag, error) {
 	return &attrTagResp, nil
 }
 
-
 func (c *Client) UpdateAttributeTag(tagID string, attTag AttrTagReq) (*AttributeTag, error) {
 
 	endpoint := endp + resource + "/" + tagID
@@ -108,7 +105,6 @@ func (c *Client) UpdateAttributeTag(tagID string, attTag AttrTagReq) (*Attribute
 
 	return &attrTagResp, nil
 }
-
 
 func (c *Client) DeleteAttributeTag(tagID string) error {
 	endpoint := endp + resource + "/" + tagID
