@@ -9,8 +9,8 @@ terraform {
 
 # create, update, and delete operations
 resource "concourse_attribute_tag" "demo" {
-	name = "saurabh test name"
-	description = "saurabh test description"
+	name = "saurabh test name change"
+	description = "saurabh test description change"
 }
 
 # read operation
