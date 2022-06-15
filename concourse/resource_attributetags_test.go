@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/saurabh-mish/terraform-provider-concourse/client"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
+	"github.com/saurabh-mish/terraform-provider-concourse/client"
 )
 
 func TestAccAttributeTag_basic(t *testing.T) {

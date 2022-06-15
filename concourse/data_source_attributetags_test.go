@@ -15,16 +15,15 @@ func TestAcceptanceAttributeTagDataSource(t *testing.T) {
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckAttrTagDestroy,
-		Steps:        []resource.TestStep{
+		Steps: []resource.TestStep{
 			{
 				Config: testAcceptanceAttributeTagDataSourceConfig(rInt),
-				Check:  resource.ComposeAggregateTestCheckFunc(
+				Check: resource.ComposeAggregateTestCheckFunc(
 					resource.TestCheckResourceAttrPair(
 						"concourse_attribute_tag.demo_tag", "id",
 						"data.concourse_attribute_tag.new_tag", "id",
 					),
 				),
-
 			},
 		},
 	})
@@ -51,4 +50,3 @@ func testAcceptanceAttributeTagDataSourceConfig(rInt int) string {
     }
 	`)
 }
-
