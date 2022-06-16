@@ -52,7 +52,7 @@ func testAcceptanceAttributeTag_config() string {
       required_providers {
         concourse = {
           version = "0.3.1"
-          source = "hashicorp.com/edu/concourse"
+          source = "concourselabs.com/prod/concourse"
         }
       }
     }
