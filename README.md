@@ -61,7 +61,7 @@ This release supports read operation. It is being expanded to support create, up
 
   **Note that this could be set in the provider block (but is not a security best practice)**
 
-+ Navigarte to the `iac/` directory from the project root
++ Navigate to the `iac/` directory from the project root
 
   `cd ./iac`
 
