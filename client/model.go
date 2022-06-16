@@ -14,7 +14,8 @@ type AttributeTag struct {
 	Description   string `json:"description"`
 }
 
-type AttrTagReq struct {
+/*type AttrTagReq struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
+*/

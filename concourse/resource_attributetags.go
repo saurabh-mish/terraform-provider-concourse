@@ -69,7 +69,7 @@ func resourceAttributeTagCreate(ctx context.Context, d *schema.ResourceData, m i
 	c := m.(*client.Client)
 	var diags diag.Diagnostics
 
-	attrTagData := client.AttrTagReq{
+	attrTagData := client.AttributeTag{
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 	}
@@ -118,7 +118,7 @@ func resourceAttributeTagUpdate(ctx context.Context, d *schema.ResourceData, m i
 	tagID := d.Id()
 
 	if d.HasChange("name") || d.HasChange("description") {
-		attrTagData := client.AttrTagReq{
+		attrTagData := client.AttributeTag{
 			Name:        d.Get("name").(string),
 			Description: d.Get("description").(string),
 		}

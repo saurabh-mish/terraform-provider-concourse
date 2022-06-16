@@ -38,11 +38,11 @@ func (c *Client) GetAttributeTag(tagID string) (*AttributeTag, error) {
 	return &attrTag, nil
 }
 
-func (c *Client) CreateAttributeTag(attTag AttrTagReq) (*AttributeTag, error) {
+func (c *Client) CreateAttributeTag(attTag AttributeTag) (*AttributeTag, error) {
 
 	endpoint := endp + resource
 
-	jsonPayload := &AttrTagReq{
+	jsonPayload := &AttributeTag{
 		Name:        attTag.Name,
 		Description: attTag.Description,
 	}
@@ -72,11 +72,11 @@ func (c *Client) CreateAttributeTag(attTag AttrTagReq) (*AttributeTag, error) {
 	return &attrTagResp, nil
 }
 
-func (c *Client) UpdateAttributeTag(tagID string, attTag AttrTagReq) (*AttributeTag, error) {
+func (c *Client) UpdateAttributeTag(tagID string, attTag AttributeTag) (*AttributeTag, error) {
 
 	endpoint := endp + resource + "/" + tagID
 
-	jsonPayload := &AttrTagReq{
+	jsonPayload := &AttributeTag{
 		Name:        attTag.Name,
 		Description: attTag.Description,
 	}

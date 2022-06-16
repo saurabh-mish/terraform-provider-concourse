@@ -64,7 +64,7 @@ func dataSourceAttributeTagRead(ctx context.Context, d *schema.ResourceData, m i
 		return diag.FromErr(err)
 	}
 
-	//d.Set("id", resp.ID)
+	// setting ID will result in a 404 if data block uses resource block
 	d.Set("version", resp.Version)
 	d.Set("created", resp.Created)
 	d.Set("updated", resp.Updated)
