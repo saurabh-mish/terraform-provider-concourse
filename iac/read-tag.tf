@@ -1,7 +1,7 @@
 # terraform {
 #   required_providers {
 #     concourse = {
-#       version = "0.3.1"
+#       version = "0.8"
 #       source = "concourselabs.com/prod/concourse"
 #     }
 #   }

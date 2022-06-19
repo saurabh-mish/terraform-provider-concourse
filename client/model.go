@@ -2,7 +2,7 @@ package client
 
 // JSON response data structure of attribute tag response object
 // for create, read, and update operations
-type AttributeTag struct {
+type AttributeTagResp struct {
 	ID            int    `json:"id"`
 	Version       int    `json:"version"`
 	Created       string `json:"created"`
@@ -14,8 +14,7 @@ type AttributeTag struct {
 	Description   string `json:"description"`
 }
 
-/*type AttrTagReq struct {
+type AttributeTagReq struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
-*/

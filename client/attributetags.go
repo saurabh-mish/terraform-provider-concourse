@@ -12,7 +12,7 @@ import (
 const endp = "https://prod.concourselabs.io/api/model/v1"
 const resource = "/institutions/113/attribute-tags"
 
-func (c *Client) GetAttributeTag(tagID string) (*AttributeTag, error) {
+func (c *Client) GetAttributeTag(tagID string) (*AttributeTagResp, error) {
 	endpoint := endp + resource + "/" + tagID
 	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
@@ -28,21 +28,19 @@ func (c *Client) GetAttributeTag(tagID string) (*AttributeTag, error) {
 		return nil, err
 	}
 
-	attrTag := AttributeTag{}
+	attrTag := AttributeTagResp{}
 	err = json.Unmarshal(body, &attrTag)
 	if err != nil {
 		log.Println("Error unmarshalling ...")
 		return nil, err
 	}
-
 	return &attrTag, nil
 }
 
-func (c *Client) CreateAttributeTag(attTag AttributeTag) (*AttributeTag, error) {
 
+func (c *Client) CreateAttributeTag(attTag AttributeTagReq) (*AttributeTagResp, error) {
 	endpoint := endp + resource
-
-	jsonPayload := &AttributeTag{
+	jsonPayload := &AttributeTagReq{
 		Name:        attTag.Name,
 		Description: attTag.Description,
 	}
@@ -62,21 +60,19 @@ func (c *Client) CreateAttributeTag(attTag AttributeTag) (*AttributeTag, error) 
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 
-	attrTagResp := AttributeTag{}
+	attrTagResp := AttributeTagResp{}
 	err = json.Unmarshal(body, &attrTagResp)
 	if err != nil {
 		log.Println("Error unmarshalling ...")
 		return nil, err
 	}
-
 	return &attrTagResp, nil
 }
 
-func (c *Client) UpdateAttributeTag(tagID string, attTag AttributeTag) (*AttributeTag, error) {
 
+func (c *Client) UpdateAttributeTag(tagID string, attTag AttributeTagReq) (*AttributeTagResp, error) {
 	endpoint := endp + resource + "/" + tagID
-
-	jsonPayload := &AttributeTag{
+	jsonPayload := &AttributeTagReq{
 		Name:        attTag.Name,
 		Description: attTag.Description,
 	}
@@ -96,15 +92,15 @@ func (c *Client) UpdateAttributeTag(tagID string, attTag AttributeTag) (*Attribu
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 
-	attrTagResp := AttributeTag{}
+	attrTagResp := AttributeTagResp{}
 	err = json.Unmarshal(body, &attrTagResp)
 	if err != nil {
 		log.Println("Error unmarshalling ...")
 		return nil, err
 	}
-
 	return &attrTagResp, nil
 }
+
 
 func (c *Client) DeleteAttributeTag(tagID string) error {
 	endpoint := endp + resource + "/" + tagID
@@ -126,6 +122,5 @@ func (c *Client) DeleteAttributeTag(tagID string) error {
 	if resp.StatusCode >= 300 {
 		return errors.New(resp.Status)
 	}
-
 	return nil
 }

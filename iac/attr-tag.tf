@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     concourse = {
-      version = "0.3.1"
+      version = "0.8"
       source = "concourselabs.com/prod/concourse"
     }
   }
@@ -9,8 +9,8 @@ terraform {
 
 # create, update, and delete operations
 resource "concourse_attribute_tag" "demo" {
-	name = "saurabh test name change"
-	description = "saurabh test description change"
+	name = "test name"
+	description = "test description"
 }
 
 # read operation

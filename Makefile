@@ -3,7 +3,7 @@ NAMESPACE=prod
 TYPE=provider
 NAME=concourse
 BINARY=terraform-${TYPE}-${NAME}
-VERSION=0.3.1
+VERSION=0.8
 OS_ARCH=darwin_arm64
 
 default: build
